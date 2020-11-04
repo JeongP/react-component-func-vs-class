@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
@@ -11,6 +11,8 @@ function App() {
   );
 }
 
+var funcStyle = 'color:blue';
+var funcId = 0;
 function FuncComp(props) {
   var numState = useState(props.initNum);
   var num = numState[0];
@@ -22,9 +24,34 @@ function FuncComp(props) {
   // var dateState = useState((new Date()).toString());
   // var _date = dateState[0];
   // var setDate = dateState[1];
+  
+  useEffect(function(){
+    console.log('%cfunc => useEffect (componentDidMount) ' + (++funcId), funcStyle);
+    document.title = num;
+    return function(){
+      console.log('%cfunc => useEffect return (componentWillUnMount) ' + (++funcId), funcStyle);
+    }
+  },[]);
+
+  useEffect(function(){
+    console.log('%cfunc => useEffect num (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle);
+    document.title = num;
+    return function(){
+      console.log('%cfunc => useEffect return num (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle);
+    }
+  },[num]);
+
+  useEffect(function(){
+    console.log('%cfunc => useEffect date (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle);
+    document.title = _date;
+    return function(){
+      console.log('%cfunc => useEffect return date(componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle);
+    }
+  },[_date]);
+
 
   
-
+  console.log('%cfunc => render ' + (++funcId), funcStyle);
   return(
     <div className="container">
       <h2>Func Component</h2>
@@ -65,8 +92,8 @@ class ClassComp extends React.Component {
   }
   componentWillUpdate(nextProps, nextState) {
     console.log('%cclass => componentWillUpdate', classStyle);
-    console.log(this.state.num, nextState.num)
-    nextState.num = x;
+    // console.log(this.state.num, nextState.num)
+    // nextState.num = x;
   }
   componentDidUpdate(nextProps, nextState) {
     console.log('%cclass => componentDidUpdate', classStyle);
