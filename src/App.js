@@ -15,7 +15,7 @@ function FuncComp(props) {
   var numState = useState(props.initNum);
   var num = numState[0];
   var setNum = numState[1];
-  
+
 // state 표기방법 1 (축약)
   var [_date, setDate] = useState((new Date()).toString());
 // state 표기방법 2
@@ -45,12 +45,36 @@ function FuncComp(props) {
   );
 }
 
+var classStyle = 'color:red';
+var x=3;
 class ClassComp extends React.Component {
   state = {
     num: this.props.num,
     date: (new Date()).toString()
+  };
+  
+  componentWillMount(){
+    console.log('%cclass => componentWillMount', classStyle);
   }
+  componentDidMount(){
+    console.log('%cclass => componentDidMount', classStyle);
+  }
+  shouldComponentUpdate(nextProps, nextState){
+    console.log('%cclass => shouldComponentUpdate', classStyle);
+    return true;
+  }
+  componentWillUpdate(nextProps, nextState) {
+    console.log('%cclass => componentWillUpdate', classStyle);
+    console.log(this.state.num, nextState.num)
+    nextState.num = x;
+  }
+  componentDidUpdate(nextProps, nextState) {
+    console.log('%cclass => componentDidUpdate', classStyle);
+  }
+
+
   render() {
+    console.log('%cclass => render', classStyle);
     return (
       <div className="container">
         <h2>Class Component</h2>
