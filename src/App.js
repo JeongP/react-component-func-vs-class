@@ -32,12 +32,13 @@ function FuncComp(props) {
       console.log('%cfunc => useEffect return (componentWillUnMount) ' + (++funcId), funcStyle);
     }
   },[]);
-
+  
   useEffect(function(){
     console.log('%cfunc => useEffect num (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle);
     document.title = num;
     return function(){
       console.log('%cfunc => useEffect return num (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle);
+      
     }
   },[num]);
 
@@ -48,7 +49,6 @@ function FuncComp(props) {
       console.log('%cfunc => useEffect return date(componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle);
     }
   },[_date]);
-
 
   
   console.log('%cfunc => render ' + (++funcId), funcStyle);
